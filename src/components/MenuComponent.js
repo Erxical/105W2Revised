@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reactstrap';
+import DishDetail from './DishdetailComponent';
 
 function RenderMenuItem ({dish, onClick}) {
     return (
@@ -12,16 +13,10 @@ function RenderMenuItem ({dish, onClick}) {
     );
 }
 
-function renderDish(dish) {
+function RenderDish({dish, comments}) {
     if (dish != null)
         return(
-            <Card>
-                <CardImg top src={dish.image} alt={dish.name} />
-                <CardBody>
-                  <CardTitle>{dish.name}</CardTitle>
-                  <CardText>{dish.description}</CardText>
-                </CardBody>
-            </Card>
+            <DishDetail dish={dish} comments={comments.filter(item => item.dishId === dish.id)} />
         );
     else
         return(
@@ -36,6 +31,7 @@ const Menu = (props) => {
             <div className="col-12 col-md-5 m-1"  key={dish.id}>
                 <RenderMenuItem dish={dish} onClick={props.onClick} />
             </div>
+
         );
     });
 
@@ -45,8 +41,8 @@ const Menu = (props) => {
                 {menu}
             </div>
        <div className="row">
-              <div className="col-12 col-md-5 m-1">
-                {renderDish(props.dishes[props.selectedDish])}
+              <div className="col-12 m-1">
+                <RenderDish dish={props.dishes[props.selectedDish]} comments={props.comments}/>
               </div>
             </div>
         </div>

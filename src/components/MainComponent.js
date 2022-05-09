@@ -9,18 +9,20 @@ import Contact from './ContactComponent';
 import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
+import DishDetail from './DishdetailComponent'
 
 class Main extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             dishes: DISHES,
             comments: COMMENTS,
             promotions: PROMOTIONS,
-            leaders: LEADERS
+            leaders: LEADERS,
+            selectedDish: null,
         };
+        this.onDishSelect = this.onDishSelect.bind(this);
     }
 
     onDishSelect(dishId) {
@@ -42,7 +44,7 @@ class Main extends Component {
                 <Header />
                 <Switch>
                     <Route path='/home' component={HomePage} />
-                    <Route exact path='/menu' component={() => <Menu dishes={this.state.dishes} selectedDish={this.state.selectedDish} onClick={(dishId) => this.onDishSelect(dishId)}/>} />
+                    <Route exact path='/menu' component={() => <Menu dishes={this.state.dishes} selectedDish={this.state.selectedDish} onClick={(dishId) => this.onDishSelect(dishId)} comments={this.state.comments} />} />
                     <Route exact path='/contactus' component={Contact} />
                     <Redirect to="/home" />
                 </Switch>
